@@ -1,0 +1,8 @@
+
+<p class="card-text">${alumno.email}</p>
+<p class="card-text">${alumno.telefono}</p>
+<p class="card-text">${alumno.descripcion}</p>
+
+<button class="btn btn-success ver" data-id="${alumno.id}" data-tipo="alumno">Ver</button>
+<button class="btn btn-secondary editar" data-id="${alumno.id}" data-tipo="alumno">Editar</button>                                
+<button class="btn btn-danger eliminar" data-id="${alumno.id}" data-tipo="alumno">Eliminar</button>

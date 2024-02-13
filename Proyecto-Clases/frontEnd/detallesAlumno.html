@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumnos</title>
+    <link rel="shortcut icon" href="img/favicon0.png" type="image/x-icon">
+    <!-- Correcto orden de los scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/eliminar.js"></script>
+    <script src="js/detallesAlumno.js"></script>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- Placeholder para el contenido del header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Contenido principal de la página -->
+    <div class="container flex-grow-1">
+        <!-- Aquí va el contenido específico de cada página -->
+        <div class="container text-center">
+            <img src="img/graduado.png" alt="" width="110px" height="110px" class="m-5 img-fluid">
+            <p>
+                <!-- _________________💻🚀__________________ -->
+            </p>
+            <div class="container mt-4">
+                <h2>Datos Alumno</h2>
+                <div id="detalles-alumnos" class="card">
+                    <!-- Las tarjetas de los alumnos se insertarán aquí dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal de Edición -->
+    <div class="modal fade" id="editarAlumnoModal" tabindex="-1" aria-labelledby="editarAlumnoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarAlumnoModalLabel">Editar Datos del Alumno</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulario para editar alumno -->
+                    <form id="formEditarAlumno">
+                        <div class="form-group">
+                            <label for="nombreAlumno">Nombre</label>
+                            <input type="text" class="form-control" id="nombreAlumno" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="emailAlumno">Email</label>
+                            <input type="email" class="form-control" id="emailAlumno" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefonoAlumno">Teléfono</label>
+                            <input type="text" class="form-control" id="telefonoAlumno" name="telefono" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcionAlumno">Descripción</label>
+                            <textarea class="form-control" id="descripcionAlumno" name="descripcion"></textarea>
+                        </div>
+                        <input type="hidden" id="idAlumno" name="id">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" form="formEditarAlumno">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Placeholder para el contenido del footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Carga el contenido de los archivos header.html y footer.html en sus respectivos placeholders
+        $(function () {
+            $("#header-placeholder").load("header.html");
+            $("#footer-placeholder").load("footer.html");
+        });
+    </script>
+
+</body>
+
+</html>

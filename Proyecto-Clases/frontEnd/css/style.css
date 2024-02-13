@@ -15,6 +15,7 @@ body{
 
 img:hover, button:hover {
     transform: scale(1.1);
+    cursor: pointer;
 }
 
 
@@ -26,4 +27,8 @@ img,button,.card {
     transition: transform 0.3s ease;
 }
 
+.tarjeta-alumno:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}
 

@@ -1,3 +1,4 @@
+// const URL = '../../backEnd/php/';
 document.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', e => {
         if (e.target.classList.contains('eliminar')) {
@@ -8,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(tipo);
 
             if (confirm('¿Estás seguro de querer eliminar este registro?')) {
-                fetch('http://localhost:3000/backEnd/php/eliminar.php', {
+                fetch(URL+'eliminar.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -19,7 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(data => {
                     if (data === 'Exito') {
                         alert('Registro eliminado con éxito');
-                        location.reload(); // O alguna otra lógica para actualizar la vista
+                        if (tipo == 'alumno') {
+                            location.href='alumnos.html';
+                        }
+                        else{
+                            location.reload(); 
+                        }                 
                     } else {
                         alert('Error al eliminar el registro');
                     }

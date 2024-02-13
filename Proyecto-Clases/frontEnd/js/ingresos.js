@@ -1,3 +1,6 @@
+const URL = '../../backEnd/php/';
+
+
 function mesNombre(cadenaMes) {
   const meses = [
     "Enero",
@@ -37,8 +40,9 @@ function agruparIngresosPorMes(ingresos) {
   return ingresosPorMes;
 }
 
+
 function getIngresos() {
-  fetch("http://localhost:3000/backEnd/php/ingresos.php")
+  fetch(URL+'ingresos.php')
     .then((response) => response.json())
     .then((ingresos) => {
       const contenedorAcordeon = document.getElementById("acordeon-ingresos");
@@ -63,30 +67,22 @@ function getIngresos() {
               <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#acordeon-ingresos">
 
               <div class="card-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Monto</th>
-                    <th>Fecha</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${ingresosPorMes[nombreMes].ingresos
-                    .map(
-                      (ingreso) => `
-                    <tr>
-                      <td>${ingreso.nombre}</td>
-                      <td>${ingreso.monto}€</td>
-                      <td>${ingreso.fecha}</td>
-                      <td><button class="btn btn-secondary eliminar" data-id="${ingreso.id}" data-tipo="ingreso">Eliminar</button></td>
-                    </tr>
-                  `
-                    )
-                    .join("")}
-                </tbody>
-              </table>
+                ${ingresosPorMes[nombreMes].ingresos
+                  .map(
+                    (ingreso) => `
+                      <div class="card mb-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                        <div class="card-body">
+                          <h5 class="card-title">${ingreso.nombre}</h5>
+                          <p class="card-text">Monto: ${ingreso.monto}€</p>
+                          <p class="card-text">Fecha: ${ingreso.fecha}</p>
+                          <button class="btn btn-secondary eliminar" data-id="${ingreso.id}" data-tipo="ingreso">Eliminar</button>
+                        </div>
+                      </div>
+                    `
+                  )
+                  .join("")}
+              </div>
+
             </div>            
               </div>
             </div>
@@ -101,7 +97,7 @@ function getIngresos() {
 }
 
 function cargarAlumnos() {
-  fetch("http://localhost:3000/backEnd/php/alumnos.php")
+  fetch(URL+"alumnos.php")
     .then((response) => response.json())
     .then((data) => {
       const select = document.getElementById("alumnoSelect");
@@ -123,7 +119,7 @@ function guardarIngreso() {
 
       var formData = new FormData(this);
 
-      fetch("http://localhost:3000/backEnd/php/setIngreso.php", {
+      fetch(URL+"setIngreso.php", {
         method: "POST",
         body: formData,
       })

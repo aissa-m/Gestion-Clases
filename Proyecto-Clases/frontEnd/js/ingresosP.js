@@ -1,5 +1,6 @@
+const URL = '../../backEnd/php/';
 function getPendientes() {
-  fetch("http://localhost:3000/backEnd/php/getPagosPendientes.php")
+  fetch(URL+"getPagosPendientes.php")
     .then(response => response.json())
     .then(pendientes => {
       const contenedor = document.getElementById("contenedor-pendientes");
@@ -45,7 +46,7 @@ function addEventListenersToButtons() {
 
 
 function cargarAlumnos() {
-  fetch("http://localhost:3000/backEnd/php/alumnos.php")
+  fetch(URL+"alumnos.php")
     .then((response) => response.json())
     .then((data) => {
       const select = document.getElementById("alumnoSelect");
@@ -65,7 +66,7 @@ function guardarPendiente() {
 
       var formData = new FormData(this);
       console.log(formData);
-      fetch("http://localhost:3000/backEnd/php/setPagoP.php", {
+      fetch(URL+"setPagoP.php", {
         method: "POST",
         body: formData,
       })
@@ -86,7 +87,7 @@ function guardarPendiente() {
 
 function pagar(idPagoPendiente) {
   console.log(idPagoPendiente);
-  fetch("http://localhost:3000/backEnd/php/pagar.php", {
+  fetch(URL+"pagar.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -109,7 +110,7 @@ function pagar(idPagoPendiente) {
 
 
 function getTotalPendiente(){
-  fetch('http://localhost:3000/backEnd/php/getTotalP.php')
+  fetch(URL+'getTotalP.php')
   .then(response => response.json())
   .then( total =>{
     const card = document.getElementById('totalP');

@@ -1,7 +1,7 @@
-const URL = '../../backEnd/php/alumnos.php';
+const URL = '../../backEnd/php/';
 
 function getAlumnos() {
-    fetch(URL)
+    fetch(URL+"alumnos.php")
         .then(response => response.json()) // Convierte la respuesta a JSON
         .then(alumnos => {
             const contenedor = document.getElementById('contenedor-alumnos');
@@ -9,18 +9,10 @@ function getAlumnos() {
 
             alumnos.forEach(alumno => {
                 const card = `
-                    <div class="col-md-4 mb-4">
-                        <div class="card" style="background-color: rgba(0, 0, 0, 0.2);">
+                    <div class="col-md-4 mb-4 tarjeta-alumno">
+                        <div class="card" style="background-color: rgba(0, 0, 0, 0.2);" onclick="verDetallesAlumno(${alumno.id})">
                             <div class="card-body">
-                                <h5 class="card-title">${alumno.nombre}</h5>
-                                
-                                <p class="card-text">${alumno.email}</p>
-                                <p class="card-text">${alumno.telefono}</p>
-                                <p class="card-text">${alumno.descripcion}</p>
-
-                                <button class="btn btn-success ver" data-id="${alumno.id}" data-tipo="alumno">Ver</button>
-                                <button class="btn btn-secondary editar" data-id="${alumno.id}" data-tipo="alumno">Editar</button>                                
-                                <button class="btn btn-danger eliminar" data-id="${alumno.id}" data-tipo="alumno">Eliminar</button>
+                                <h5 class="card-title">${alumno.nombre}</h5>                                
                             </div>
                         </div>
                     </div>
@@ -38,7 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
     getAlumnos();
 });
 
-
+function verDetallesAlumno(id) {
+    localStorage.setItem('alumnoId', id);
+    window.location.href = 'detallesAlumno.html';
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     // Obtén una instancia del modal usando su ID
@@ -68,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Ejemplo básico de cómo enviar los datos con Fetch y FormData
         var formData = new FormData(form);
 
-        fetch('../../backEnd/php/nuevoAlumno.php', {
+        fetch(URL+'nuevoAlumno.php', {
             method: 'POST',
             body: formData
         })
