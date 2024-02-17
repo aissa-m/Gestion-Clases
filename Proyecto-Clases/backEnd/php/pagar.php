@@ -6,6 +6,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 if (isset($data['id'])) {
     $id = $data['id'];
+    $idProfe = $data['idProfe'];
 
     // Primero, selecciona el pago pendiente para obtener los detalles
     $consulta = $conexion->prepare('SELECT * FROM pagos_pendientes WHERE id = ?');
@@ -18,8 +19,8 @@ if (isset($data['id'])) {
         $fechaActual = date('Y-m-d');
 
         // Inserta los detalles en la tabla de ingresos
-        $insertar = $conexion->prepare('INSERT INTO ingresos (alumno_id, monto, fecha) VALUES (?, ?, ?)');
-        $insertar->bind_param('ids', $pago['alumno_id'], $pago['monto'], $pago['fecha']);
+        $insertar = $conexion->prepare('INSERT INTO ingresos (alumno_id, monto, fecha, idProfe) VALUES (?, ?, ?, ?)');
+        $insertar->bind_param('idsi', $pago['alumno_id'], $pago['monto'], $pago['fecha'], $idProfe);
         
         if ($insertar->execute()) {
             // Si el ingreso se registra con éxito, elimina el pago pendiente

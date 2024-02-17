@@ -1,7 +1,6 @@
 const URL = '../../backEnd/php/';
-
-document.addEventListener('DOMContentLoaded', () => {
-    const alumnoId = localStorage.getItem('alumnoId');
+const alumnoId = localStorage.getItem('alumnoId');
+document.addEventListener('DOMContentLoaded', () => {    
     if (alumnoId) {
         fetch(URL+`detallesAlumno.php?id=${alumnoId}`)
             .then(response => response.json())
@@ -21,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
             cargarDatosAlumnoEnModal(alumnoId);
         }
     });
+
+
+    deudas();
 });
 
 function mostrarDetallesAlumno(data) {
@@ -35,6 +37,8 @@ function mostrarDetallesAlumno(data) {
             
             <button class="btn btn-secondary editar" id="editar" data-id="${data.id}" data-tipo="alumno">Editar</button>                                
             <button class="btn btn-danger eliminar" data-id="${data.id}" data-tipo="alumno">Eliminar</button>
+            
+
         <div>
     `;
 
@@ -93,3 +97,31 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error:', error));
     });
 });
+
+
+function deudas() {
+    console.log(alumnoId);
+    if(alumnoId != '' && alumnoId != null){
+        fetch(URL+`deuda.php?id=${alumnoId}`)
+        .then(response => response.json())
+        .then( data =>{            
+            console.log(data);
+            if (data.deuda !== null) {
+                const div = document.getElementById('deudas');
+                const card = `
+                    <div class="card" style="background-color: rgba(0, 0, 0, 0.2);">
+                        <div class="card-body">
+                            <h5>Pendiente: ${data.deuda}€</h5>
+                        </div>
+                    </div>
+                    
+                `;
+
+                div.insertAdjacentHTML('beforeend', card);
+            }
+        })
+        .catch( error => {
+            console.error('Error del servidor: '+error);
+        })
+    }
+}

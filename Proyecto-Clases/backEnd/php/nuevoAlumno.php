@@ -15,14 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = isset($_POST['email']) ? $_POST['email'] : null;
     $telefono = isset($_POST['telefono']) ? $_POST['telefono'] : null;
     $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : '';
+    $idProfe = $_POST['idProfe'] ?? null;
 
     // Preparación de la consulta para insertar los datos
-    $query = "INSERT INTO alumnos (nombre, email, telefono, descripcion) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO alumnos (nombre, email, telefono, descripcion, idProfe) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conexion->prepare($query);
 
     // Vinculación de parámetros y ejecución de la consulta
     if ($stmt) {
-        $stmt->bind_param("ssss", $nombre, $email, $telefono, $descripcion);
+        $stmt->bind_param("ssssi", $nombre, $email, $telefono, $descripcion, $idProfe);
         $resultado = $stmt->execute();
 
         // Verificación del resultado de la inserción

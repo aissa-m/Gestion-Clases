@@ -1,13 +1,21 @@
 const URL = '../../backEnd/php/';
 
 function getAlumnos() {
-    fetch(URL+"alumnos.php")
-        .then(response => response.json()) // Convierte la respuesta a JSON
-        .then(alumnos => {
+    const id = localStorage.getItem('id');
+    fetch(URL+"alumnos.php", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id: id}) // Convertir objeto a cadena JSON
+    })
+    .then(response => response.json()) // Convierte la respuesta a JSON
+    .then(data => {
+        if (data.success) {
             const contenedor = document.getElementById('contenedor-alumnos');
             contenedor.innerHTML = ''; // Limpia el contenido actual del contenedor
-
-            alumnos.forEach(alumno => {
+            // console.log(data);
+            data.alumnos.forEach(alumno => {
                 const card = `
                     <div class="col-md-4 mb-4 tarjeta-alumno">
                         <div class="card" style="background-color: rgba(0, 0, 0, 0.2);" onclick="verDetallesAlumno(${alumno.id})">
@@ -19,10 +27,16 @@ function getAlumnos() {
                 `;
                 contenedor.insertAdjacentHTML('beforeend', card);
             });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        }
+        else{
+            const h2 = document.getElementById('titulo');
+            h2.innerText = 'No hay datos todavia!';
+        }
+        
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 
@@ -56,12 +70,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Sustituye el manejo de tu formulario aquí con Fetch API
     const form = document.getElementById('formAgregarAlumno');
+    const idProfe = localStorage.getItem('id');
     form.addEventListener('submit', function(e) {
         e.preventDefault();
 
         // Usa Fetch API para enviar los datos aquí
         // Ejemplo básico de cómo enviar los datos con Fetch y FormData
         var formData = new FormData(form);
+        formData.append('idProfe', idProfe);
 
         fetch(URL+'nuevoAlumno.php', {
             method: 'POST',

@@ -42,7 +42,12 @@ function agruparIngresosPorMes(ingresos) {
 
 
 function getIngresos() {
-  fetch(URL+'ingresos.php')
+  const id = localStorage.getItem('id');
+  fetch(URL+'ingresos.php', {
+    method: 'POST',
+    headers:{'Content-Type': 'application/json'},
+    body: JSON.stringify({id:id})
+  })
     .then((response) => response.json())
     .then((ingresos) => {
       const contenedorAcordeon = document.getElementById("acordeon-ingresos");
@@ -97,16 +102,25 @@ function getIngresos() {
 }
 
 function cargarAlumnos() {
-  fetch(URL+"alumnos.php")
+  const id = localStorage.getItem('id');
+  fetch(URL+"alumnos.php", {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({id: id}) // Convertir objeto a cadena JSON
+})
     .then((response) => response.json())
     .then((data) => {
-      const select = document.getElementById("alumnoSelect");
-      data.forEach((alumno) => {
-        const option = document.createElement("option");
-        option.value = alumno.id;
-        option.textContent = alumno.nombre;
-        select.appendChild(option);
-      });
+      if (data.success) {
+        const select = document.getElementById("alumnoSelect");
+        data.alumnos.forEach((alumno) => {
+          const option = document.createElement("option");
+          option.value = alumno.id;
+          option.textContent = alumno.nombre;
+          select.appendChild(option);
+        });
+      }      
     })
     .catch((error) => console.error("Error:", error));
 }
@@ -117,8 +131,9 @@ function guardarIngreso() {
     .addEventListener("submit", function (e) {
       e.preventDefault();
 
+      const idProfe = localStorage.getItem('id');
       var formData = new FormData(this);
-
+      formData.append('idProfe', idProfe);
       fetch(URL+"setIngreso.php", {
         method: "POST",
         body: formData,
@@ -128,7 +143,7 @@ function guardarIngreso() {
           if (data === "Exito") {
             location.href = "ingresos.html";
           } else {
-            alert("Error al añadir alumno");
+            alert("Error al añadir ingreso");
           }
         })
         .catch((error) => {

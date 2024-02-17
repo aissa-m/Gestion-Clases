@@ -27,8 +27,9 @@ img,button,.card {
     transition: transform 0.3s ease;
 }
 
-.tarjeta-alumno:hover{
-    transform: scale(1.1);
+.tarjeta-alumno .card:hover{
+    box-shadow: 0px 0px 40px 10px #f0dfcd3f;
+    /* border: 1px solid rgba(255, 255, 255, 0.454);  */
     cursor: pointer;
 }
 

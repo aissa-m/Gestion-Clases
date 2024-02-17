@@ -2,16 +2,23 @@
 
 include 'conexion.php';
 
-$consulta = $conexion->prepare('SELECT SUM(monto) AS total FROM pagos_pendientes');
-$consulta->execute();
-$res = $consulta->get_result();
+$data = json_decode(file_get_contents('php://input'), true);
 
-$total = 0;
+if (isset($data['id'])) {
+    $idProfe = $data['id'];
+    $consulta = $conexion->prepare('SELECT SUM(monto) AS total FROM pagos_pendientes WHERE idProfe = ?');
+    $consulta->bind_param('i', $idProfe);
+    $consulta->execute();
+    $res = $consulta->get_result();
 
-if ($fila = $res->fetch_assoc()) {
-    $total = $fila['total'] === null ? 0 : $fila['total'];
-    echo json_encode($total);
-}
-else{
-    echo json_encode('No hay datos');
+    $total = 0;
+
+    if ($fila = $res->fetch_assoc()) {
+        $total = $fila['total'] === null ? 0 : $fila['total'];
+        echo json_encode($total);
+    }
+    else{
+        echo json_encode('No hay datos');
+    }
+
 }

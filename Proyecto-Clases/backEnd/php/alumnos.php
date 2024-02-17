@@ -1,32 +1,50 @@
-<?php 
+<?php
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST');
-header('Access-Control-Allow-Headers: X-Requested-With, Content-Type');
 header('Content-Type: application/json');
-include 'conexion.php';
+session_start();
 
-// Prepara la consulta
-$consulta = $conexion->prepare('SELECT * FROM alumnos');
+include 'conexion.php'; // Asegúrate de que la ruta a tu script de conexión es correcta
 
-// Ejecuta la consulta
-$consulta->execute();
+// Lee el cuerpo de la solicitud
+$data = json_decode(file_get_contents('php://input'), true);
 
-// Obtiene el resultado
-$resultado = $consulta->get_result();
+if (isset($data['id'])) {
+    $idProfe = $data['id'];
 
-$datos = [];
-// Verifica si hay datos
-if($resultado->num_rows > 0){
-    // Obtiene los datos como un array asociativo
-    $datos = $resultado->fetch_all(MYSQLI_ASSOC);
-    $datos = array_reverse($datos);
-    // Envía los datos en formato JSON
-    echo json_encode($datos);
+    // Prepara la consulta para seleccionar los alumnos asociados al profesor
+    $consulta = $conexion->prepare('SELECT * FROM alumnos WHERE idProfe = ?');
+    $consulta->bind_param('i', $idProfe);
+
+    // Ejecuta la consulta
+    if ($consulta->execute()) {
+        $resultado = $consulta->get_result();
+        $alumnos = [];
+
+        // Verifica si hay datos
+        if ($resultado->num_rows > 0) {
+            // Obtiene los datos como un array asociativo
+            while ($fila = $resultado->fetch_assoc()) {
+                $alumnos[] = $fila;
+            }
+
+            // Envía los datos en formato JSON
+            echo json_encode(["success" => true, "alumnos" => $alumnos]);
+        } else {
+            // Si no hay datos, envía un mensaje de error en formato JSON
+            echo json_encode(["success" => false, "message" => "No se encontraron alumnos"]);
+        }
+    } else {
+        // Si la consulta no se ejecuta correctamente, envía un mensaje de error
+        echo json_encode(["success" => false, "message" => "Error al ejecutar la consulta"]);
+    }
+
+    // Cierra la consulta
+    $consulta->close();
 } else {
-    // Si no hay datos, envía un mensaje de error en formato JSON
-    echo json_encode(['error' => 'No se encontraron datos']);
+    // Si no se reciben los datos esperados, envía un mensaje de error
+    echo json_encode(["success" => false, "message" => "Datos incompletos"]);
 }
 
-// Cierra la consulta y la conexión como buena práctica
-$consulta->close();
+// Cierra la conexión a la base de datos
 $conexion->close();
+?>
