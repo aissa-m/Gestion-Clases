@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function mostrarDetallesAlumno(data) {
     const card = document.getElementById('detalles-alumnos');
-    card.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
+    // card.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
     const info = `
         <div class="card-body">
             <b><p>${data.nombre}</p></b>
@@ -109,7 +109,7 @@ function deudas() {
             if (data.deuda !== null) {
                 const div = document.getElementById('deudas');
                 const card = `
-                    <div class="card" style="background-color: rgba(0, 0, 0, 0.2);">
+                    <div class="card deudas">
                         <div class="card-body">
                             <h5>Pendiente: ${data.deuda}€</h5>
                         </div>

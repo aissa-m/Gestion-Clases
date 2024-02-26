@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumnos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="img/favicon0.png" type="image/x-icon">
+    <!-- Correcto orden de los scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="js/perfil.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/perfil.css">
+
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- Placeholder para el contenido del header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Contenido principal de la página -->
+    <div class="container flex-grow-1">
+        <!-- Aquí va el contenido específico de cada página -->
+        <div class="container text-center mt-5" id="datos">
+
+        </div>
+    </div>
+
+    <!-- Placeholder para el contenido del footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Carga el contenido de los archivos header.html y footer.html en sus respectivos placeholders
+        $(function () {
+            $("#header-placeholder").load("header.html");
+            $("#footer-placeholder").load("footer.html");
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
